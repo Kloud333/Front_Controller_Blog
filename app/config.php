@@ -1,7 +1,12 @@
 <?php
 return [
-    'name' => 'Book store',
-    'dsn' => 'mysql:host=localhost; dbname=blog',
-    'login' => 'root',
-    'pass' => ''
+    'driver' => 'mysql',
+    'host' => 'localhost',
+    'database' => 'orm_blog',
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => '',
+
 ];

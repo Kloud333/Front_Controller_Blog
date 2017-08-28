@@ -1,10 +1,11 @@
 <?php
 
-namespace app\src\users;
+namespace app\src\controllers\users;
 
 
 use function app\core\renderView;
 use app\core;
+use app\src\models\User;
 
 /**
  * @return null|string
@@ -47,27 +48,12 @@ function logout() {
 }
 
 function loadUserByUsername($username) {
-    global $app;
-
-    /** @var \PDO $dbh */
-    $dbh = $app['db'];
-
-    $sth = $dbh->prepare('SELECT * FROM users WHERE username=?');
-    $sth->execute([$_POST['username']]);
-    $users = $sth->fetchAll(\PDO::FETCH_ASSOC);
-
+    $users = User::where('username', '=', $username)->get()->toArray();
     return current($users);
 }
 
 function registration() {
-
-    global $app;
-
-    /** @var \PDO $dbh */
-    $dbh = $app['db'];
-    $sth = $dbh->prepare('SELECT username FROM users WHERE username=?');
-    $sth->execute([$_POST['username']]);
-    $user = $sth->fetchAll(\PDO::FETCH_ASSOC);
+    $user = User::where('username', '=', $_POST['username'])->get()->toArray();
 
     if (!($_POST['username']) || !($_POST['email']) || (!$_POST['password'])) {
         core\addFlash('danger', 'Not enough parameters');
@@ -81,8 +67,8 @@ function registration() {
 
     if (!($_POST['username'] == $user[0]['username'])) {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $sth = $dbh->prepare('INSERT INTO blog.users ( username, password, email) VALUES ( ?, ?, ? )');
-        $sth->execute([$_POST['username'], $password, $_POST['email']]);
+        User::insert(['username' => $_POST['username'], 'password' => $password, 'email' => $_POST['email']]);
+
         core\addFlash('success', 'You are register!');
         core\redirect('main_page');
     } else {

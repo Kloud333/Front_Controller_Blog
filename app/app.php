@@ -9,6 +9,10 @@ include '../core/flash_messages.php';
 include '../exceptions/HttpNotFoundException.php';
 include '../exceptions/RuntimeException.php';
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+include '../vendor/autoload.php';
+
 // Configuring
 $app = [
     'kernel.root_dir' => dirname(dirname(__FILE__))
@@ -23,5 +27,9 @@ $app['config'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'config.
 $app['routes'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'routes.php';
 $app['user'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'user.php';
 
-$app['db'] = new PDO($app['config']['dsn'], $app['config']['login'], $app['config']['pass']);
-$app['db']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$app['capsule'] = new Capsule;
+
+$app['capsule']->addConnection(['driver' => $app['config']['driver'], 'host' => $app['config']['host'], 'database' => $app['config']['database'], 'username' => $app['config']['username'], 'password' => $app['config']['password'], 'charset' => $app['config']['charset'], 'collation' => $app['config']['collation'], 'prefix' => $app['config']['prefix']]);
+
+$app['capsule']->setAsGlobal();
+$app['capsule']->bootEloquent();

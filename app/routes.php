@@ -6,81 +6,80 @@
 return [
     'main_page' => [
         'path' => '/',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\index',
-        'methods' => ['GET']
-    ],
-    'posts' => [
-        'path' => '/posts',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\index',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
     ],
     'post_by_id' => [
         'path' => '/post/{id}',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\postById',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\postById',
+        'methods' => ['GET']
+    ],
+    'post_by_author' => [
+        'path' => '/author/{author}',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
     ],
     'login_page' => [
         'path' => '/login',
-        'file' => 'users.php',
-        'function' => 'app\\src\\users\\loginPage',
+        'file' => 'controllers\users.php',
+        'function' => 'app\\src\\controllers\\users\\loginPage',
         'methods' => ['GET']
     ],
     'registration_page' => [
         'path' => '/registration',
-        'file' => 'users.php',
-        'function' => 'app\\src\\users\\registrationPage',
+        'file' => 'controllers\users.php',
+        'function' => 'app\\src\\controllers\\users\\registrationPage',
         'methods' => ['GET']
     ],
     'user_cabinet_page' => [
-        'path' => '/user/{cabinet}/',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\index',
+        'path' => '/user/cabinet/',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
     ],
     'login' => [
         'path' => '/login',
-        'file' => 'users.php',
-        'function' => 'app\\src\\users\\login',
+        'file' => 'controllers\users.php',
+        'function' => 'app\\src\\controllers\\users\\login',
         'methods' => ['POST']
     ],
     'logout' => [
         'path' => '/logout',
-        'file' => 'users.php',
-        'function' => 'app\\src\\users\\logout',
+        'file' => 'controllers\users.php',
+        'function' => 'app\\src\\controllers\\users\\logout',
         'methods' => ['POST']
     ],
     'registration' => [
         'path' => '/registration',
-        'file' => 'users.php',
-        'function' => 'app\\src\\users\\registration',
+        'file' => 'controllers\users.php',
+        'function' => 'app\\src\\controllers\\users\\registration',
         'methods' => ['POST']
     ],
     'add_post' => [
         'path' => '/add',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\addPost',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\addPost',
         'methods' => ['POST']
     ],
     'delete_post' => [
         'path' => '/delete',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\deletePost',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\deletePost',
         'methods' => ['POST']
     ],
     'edit_post' => [
         'path' => '/edit/post/{num}',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\editPost',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\editPost',
         'methods' => ['GET']
     ],
     'save_edit' => [
         'path' => '/save_edit',
-        'file' => 'posts.php',
-        'function' => 'app\\src\\posts\\saveEdit',
+        'file' => 'controllers\posts.php',
+        'function' => 'app\\src\\controllers\\posts\\saveEdit',
         'methods' => ['POST']
     ],
-
 ];
