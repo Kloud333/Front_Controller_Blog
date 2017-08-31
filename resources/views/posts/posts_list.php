@@ -1,9 +1,10 @@
+<?= $content ?>
+
 <?php foreach ($articles as $post_item) { ?>
     <div style="border-bottom: 1px solid #007bff; padding: 10px;">
         <a href="<?= \app\core\createUrl('post_by_id', ['id' => $post_item['id']]) ?>">
             <h3><?= $post_item['title'] ?></h3></a>
-        <a href="<?= \app\core\createUrl('post_by_author', ['author' => $post_item['username']]) ?>">
-            <p>Author: <?= $post_item['username'] ?></p></a>
+        <p>Author: <a href="<?= \app\core\createUrl('post_by_author', ['author' => $post_item['username']]) ?>"> <?= $post_item['username'] ?></a></p>
         <p><?= $post_item['created_at'] ?></p>
         <? if (strlen($post_item['content']) >= 50) { ?>
             <p><?= substr($post_item['content'], 0, 50) . ' . . .' ?></p>
@@ -36,5 +37,5 @@
     </div>
 </div>
 
-<?= $content ?>
+
 

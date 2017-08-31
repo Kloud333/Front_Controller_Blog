@@ -8,10 +8,9 @@ include '../core/files.php';
 include '../core/flash_messages.php';
 include '../exceptions/HttpNotFoundException.php';
 include '../exceptions/RuntimeException.php';
+include '../vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-
-include '../vendor/autoload.php';
 
 // Configuring
 $app = [

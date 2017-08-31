@@ -1,6 +1,4 @@
 <?php
-
-
 use app\core;
 use app\exceptions\HttpNotFoundException;
 

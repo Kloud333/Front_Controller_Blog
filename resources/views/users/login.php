@@ -6,7 +6,6 @@
     <?php endforeach; ?>
 <?php endforeach; ?>
 
-
 <form class="form-login" method="post" action="<?= \app\core\createUrl('login') ?>">
     <div class="form-group">
         <label for="loginInput">Login</label>
@@ -18,7 +17,6 @@
                name="password">
     </div>
     <span class="group-btn">
-            <input class="btn btn-primary btn-md btn-block" type="submit" name="loginButton"
-                   value="Login">
-            </span>
+            <input class="btn btn-primary btn-md btn-block" type="submit" name="loginButton" value="Login">
+    </span>
 </form>
