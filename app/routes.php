@@ -17,7 +17,7 @@ return [
         'methods' => ['GET']
     ],
     'post_by_author' => [
-        'path' => '/author/{author}',
+        'path' => '/author/{criteria}',
         'file' => 'controllers\posts.php',
         'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
@@ -35,7 +35,7 @@ return [
         'methods' => ['GET']
     ],
     'user_cabinet_page' => [
-        'path' => '/user/cabinet/',
+        'path' => '/user/cabinet/{criteria}',
         'file' => 'controllers\posts.php',
         'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
