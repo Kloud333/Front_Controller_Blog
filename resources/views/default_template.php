@@ -21,16 +21,16 @@
         </div>
         <div class="col-7">
             <form class="form-inline" name="searchForm" method="get"
-                  action="<?= \app\core\createUrl($app['route']['name'], ['id' => '', 'author' => $tag, 'num' => '']) ?>">
+                  action="<?= \app\core\createUrl($app['route']['name'], ['id' => '', 'criteria' => $tag, 'num' => '']) ?>">
                 <input class="form-control col-9 mr-sm-2" name="search" required type="text"/>
                 <input class="btn" type="submit" value="Search"/>
             </form>
         </div>
-        <div class="col-3">
+        <div class="col-3 text-right">
             <?php if ($app['user']) { ?>
-                <form method="post" class="form-inline" action="<?= \app\core\createUrl('logout') ?>">
+                <form method="post" class="form-inline float-right" action="<?= \app\core\createUrl('logout') ?>">
                     <a class="mr-sm-2"
-                       href="<?= \app\core\createUrl('user_cabinet_page') ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
+                       href="<?= \app\core\createUrl('user_cabinet_page', ['criteria' => $app['user']['username']]) ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
                     <button class="btn btn-success">Log Out</button>
                 </form>
             <?php } else { ?>
