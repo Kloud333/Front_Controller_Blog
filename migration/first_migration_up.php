@@ -8,7 +8,6 @@ Capsule::schema()->create('users', function (Illuminate\Database\Schema\Blueprin
     $table->string('username')->unique()->charset('utf8');
     $table->string('password')->charset('utf8');
     $table->string('email')->charset('utf8');
-
 });
 
 Capsule::schema()->create('posts', function (Illuminate\Database\Schema\Blueprint $table) {
