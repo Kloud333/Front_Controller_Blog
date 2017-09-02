@@ -33,8 +33,8 @@
         <?php for ($i = 0; $i < $pages; $i++) { ?>
             <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link . 'page=' . ($i + 1) ?>"><?= ($i + 1) ?></a>
         <?php } ?>
-        <?php if ($page != intval($pages)) { ?>
-            <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=<?= intval($pages) ?>">Last</a>
+        <?php if ($page != $pages && $pages != 0) { ?>
+            <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=<?= $pages ?>">Last</a>
         <?php } ?>
     </div>
 </div>
