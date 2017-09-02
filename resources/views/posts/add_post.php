@@ -1,5 +1,5 @@
 <!-- Add Post Area -->
-<?php if ($app['route']['name'] == 'user_cabinet_page') { ?>
+<?php if ($app['route']['name'] == 'user_cabinet_page' && $app['user']) { ?>
     <form method="post" action="<?= \app\core\createUrl('add_post') ?>">
         <div class="form-group">
             <input class="form-control input-sm chat-input" name="addPostTitle">
