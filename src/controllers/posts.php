@@ -16,13 +16,13 @@ use app\src\models\Post;
 // * @param null $edit
 // * @return null|string
 // */
-function index($author = null) {
+function index($criteria = null) {
 
     $criteria = [
         'link' => isset($_GET['search']) ? '?search=' . $_GET['search'] . '&' : '?',
         'countOfPages' => 4,
         'page' => is_null($_GET['page']) ? 1 : ceil($_GET['page']),
-        'tag' => $author
+        'tag' => $criteria
     ];
 
 
@@ -33,40 +33,30 @@ function index($author = null) {
 
 function getPostsByCriteria($criteria = []) {
 
-    global $app;
-
     $search = $_GET['search'];
     $posts = ($criteria['page'] - 1) * $criteria['countOfPages'];
 
-    if ($app['route']['name'] == 'post_by_author') {
-        $count = Post::select('posts.*', 'users.username')->leftJoin('users', 'posts.user_id', '=', 'users.id')->where('username', '=', $criteria['tag'])
-            ->where(function ($query) use ($search) {
-                $query->where('title', 'LIKE', '%' . $search . '%');
-            })
-            ->count();
-        $post = Post::select('posts.*', 'users.username')->leftJoin('users', 'posts.user_id', '=', 'users.id')->where('username', '=', $criteria['tag'])->where(function ($query) use ($search) {
+    $mainQuery = Post::select('posts.*', 'users.username')
+        ->leftJoin('users', 'posts.user_id', '=', 'users.id')
+        ->where(function ($query) use ($criteria) {
+            if ($criteria['tag']) {
+                $query->where('username', '=', $criteria['tag']);
+            }
+        })
+        ->where(function ($query) use ($search) {
             $query->where('title', 'LIKE', '%' . $search . '%');
-        })->orderBy('created_at', 'desc')->limit($criteria['countOfPages'])->offset($posts)->get()->toArray();
+        });
 
-    } elseif ($app['route']['name'] == 'user_cabinet_page') {
-        $count = Post::where('user_id', '=', $app['user']['id'])
-            ->where(function ($query) use ($search) {
-                $query->where('title', 'LIKE', '%' . $search . '%');
-            })
-            ->count();
-        $post = Post::select('posts.*', 'users.username')->leftJoin('users', 'posts.user_id', '=', 'users.id')->where('user_id', '=', $app['user']['id'])->where(function ($query) use ($search) {
-            $query->where('title', 'LIKE', '%' . $search . '%');
-        })->orderBy('created_at', 'desc')->limit($criteria['countOfPages'])->offset($posts)->get()->toArray();
-    } else {
-        $count = Post::where(function ($query) use ($search) {
-            $query->where('title', 'LIKE', '%' . $search . '%');
-        })
-            ->count();
-        $post = Post::select('posts.*', 'users.username')->leftJoin('users', 'posts.user_id', '=', 'users.id')->where(function ($query) use ($search) {
-            $query->where('title', 'LIKE', '%' . $search . '%');
-        })
-            ->orderBy('created_at', 'desc')->limit($criteria['countOfPages'])->offset($posts)->get()->toArray();
-    }
+    $count = $mainQuery
+        ->count();
+
+    $post = $mainQuery
+        ->orderBy('created_at', 'desc')
+        ->limit($criteria['countOfPages'])
+        ->offset($posts)
+        ->get()
+        ->toArray();
+
 
     $pages = ceil($count / $criteria['countOfPages']);
 
@@ -83,14 +73,15 @@ function addPost() {
     Post::insert(['title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText'], 'user_id' => $app['user']['id']]);
 
     core\addFlash('success', 'Post added!');
-    core\redirect('user_cabinet_page');
+    core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
 }
 
 function deletePost() {
+    global $app;
     Post::where('id', '=', $_POST['postId'])->delete();
 
     core\addFlash('info', 'Post deleted!');
-    core\redirect('user_cabinet_page');
+    core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
 }
 
 function editPost($num) {
@@ -99,10 +90,11 @@ function editPost($num) {
 }
 
 function saveEdit() {
+    global $app;
     Post::where('id', '=', $_POST['postId'])->update(array('title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText']));
 
     core\addFlash('success', 'Post changed!');
-    core\redirect('user_cabinet_page');
+    core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
 }
 
 
