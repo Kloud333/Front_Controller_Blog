@@ -22,7 +22,7 @@
         <div class="col-7">
             <form class="form-inline" name="searchForm" method="get"
                   action="<?= \app\core\createUrl($app['route']['name'], ['id' => '', 'criteria' => $tag, 'num' => '']) ?>">
-                <input class="form-control col-9 mr-sm-2" name="search" required type="text"/>
+                <input class="form-control col-9 mr-sm-2" name="search" type="text"/>
                 <input class="btn" type="submit" value="Search"/>
             </form>
         </div>

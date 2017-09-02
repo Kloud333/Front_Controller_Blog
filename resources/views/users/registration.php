@@ -8,17 +8,17 @@
 <form method="post" action="<?= \app\core\createUrl('registration') ?>">
     <div class="form-group">
         <label for="registrationInput">Login</label>
-        <input id="registrationInput" class="form-control input-sm chat-input" type="text" name="username" required>
+        <input id="registrationInput" class="form-control input-sm chat-input" type="text" name="username">
     </div>
     <div class="form-group">
         <label for="registrationInputEmail">E-mail</label>
         <input id="registrationInputEmail" class="form-control input-sm chat-input" type="email"
-               name="email" required>
+               name="email">
     </div>
     <div class="form-group">
         <label for="registrationPasswordInput">Password</label>
         <input id="registrationPasswordInput" class="form-control input-sm chat-input" type="password"
-               name="password" required>
+               name="password">
     </div>
     <input class="btn btn-success btn-md btn-block" type="submit" name="registrationButton" value="Registration">
 </form>
