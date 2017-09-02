@@ -9,14 +9,14 @@
       "email": "email@example.com"
     }
   ],
-  "require": {
-    "illuminate/database": "^5.4",
-    "fzaninotto/faker": "^1.7"
-  },
   "autoload": {
     "psr-4": {
       "": "./",
       "app\\src\\models\\":"src/models"
     }
+  },
+  "require": {
+    "illuminate/database": "^5.5",
+    "fzaninotto/faker": "^1.7"
   }
 }
