@@ -25,18 +25,24 @@
     </div>
 <?php } ?>
 
-<div class="container">
-    <div class="col-12 text-center" style="padding: 10px 0; font-size: 25px">
+<div class="col-12" style="padding: 10px 0; font-size: 20px">
+    <ul class="pagination justify-content-center">
         <?php if ($page != 1) { ?>
-            <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=1">First</a>
+            <li class="page-item>">
+                <a class="page-link" href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=1">First</a>
+            </li>
         <?php } ?>
         <?php for ($i = 0; $i < $pages; $i++) { ?>
-            <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link . 'page=' . ($i + 1) ?>"><?= ($i + 1) ?></a>
+            <li class="page-item <?= $i == $page - 1 ? 'active' : '' ?>">
+                <a class="page-link <?= $i == $page - 1 ? 'active' : '' ?>" href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link . 'page=' . ($i + 1) ?>"><?= ($i + 1) ?></a>
+            </li>
         <?php } ?>
         <?php if ($page != $pages && $pages != 0) { ?>
-            <a href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=<?= $pages ?>">Last</a>
+            <li class="page-item">
+                <a class="page-link" href="<?= \app\core\createUrl($app['route']['name'], ['criteria' => $tag]) . $link ?>page=<?= $pages ?>">Last</a>
+            </li>
         <?php } ?>
-    </div>
+    </ul>
 </div>
 
 
