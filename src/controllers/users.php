@@ -36,14 +36,13 @@ function login() {
     }
 
     core\persistUser($user);
-
-    core\addFlash('success', 'You are successfully logged!');
-
+    core\addFlash('success', 'You are successfully login!');
     core\redirect('main_page');
 }
 
 function logout() {
     core\clearUser();
+    core\addFlash('success', 'You are successfully logout!');
     core\redirect('main_page');
 }
 
@@ -75,6 +74,4 @@ function registration() {
         core\addFlash('danger', 'Username already exists!');
         core\redirect('registration_page');
     }
-
-
 }

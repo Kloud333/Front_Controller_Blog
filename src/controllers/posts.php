@@ -25,9 +25,11 @@ function index($criteria = null) {
         'tag' => $criteria
     ];
 
+    if (isset($_GET['search']) && $_GET['search'] == '') {
+        core\addFlash('danger', 'Fill the search field.');
+    }
 
-    return renderView(['default_template.php'], [
-        'content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$criteria])
+    return renderView(['default_template.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$criteria])
     ]);
 }
 
@@ -70,17 +72,22 @@ function postById($id) {
 
 function addPost() {
     global $app;
-    Post::insert(['title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText'], 'user_id' => $app['user']['id']]);
 
-    core\addFlash('success', 'Post added!');
-    core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
+    if ((!$_POST['addPostTitle']) || (!$_POST['addPostText']) || (!$app['user']['id'])) {
+        core\addFlash('danger', 'Fill all fields!');
+        core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
+    } else {
+        Post::insert(['title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText'], 'user_id' => $app['user']['id']]);
+        core\addFlash('info', 'Post added!');
+        core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
+    }
 }
 
 function deletePost() {
     global $app;
     Post::where('id', '=', $_POST['postId'])->delete();
 
-    core\addFlash('info', 'Post deleted!');
+    core\addFlash('warning', 'Post deleted!');
     core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
 }
 
