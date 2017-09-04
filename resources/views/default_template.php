@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-7">
-            <form class="form-inline" name="searchForm" method="get"
+            <form class="search-form form-inline" name="searchForm" method="get"
                   action="<?= \app\core\createUrl($app['route']['name'], ['id' => '', 'criteria' => $tag, 'num' => '']) ?>">
                 <input class="form-control col-9 mr-sm-2" name="search" type="text"/>
                 <input class="btn" type="submit" value="Search"/>
@@ -29,8 +29,8 @@
         <div class="col-3 text-right">
             <?php if ($app['user']) { ?>
                 <form method="post" class="form-inline float-right" action="<?= \app\core\createUrl('logout') ?>">
-                    <a class="mr-sm-2"
-                       href="<?= \app\core\createUrl('user_cabinet_page', ['criteria' => $app['user']['username']]) ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
+                    <a class="user-cabinet mr-sm-2"
+                       href="<?= \app\core\createUrl('user_cabinet_page') ?>">Hi <?= ucfirst($app['user']['username']) ?></a>
                     <button class="btn btn-success">Log Out</button>
                 </form>
             <?php } else { ?>
