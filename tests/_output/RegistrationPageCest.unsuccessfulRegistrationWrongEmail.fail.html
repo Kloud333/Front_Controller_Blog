@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="/style/style.css" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+
+<header class="col-12 clearfix ">
+    <div class="row navbar navbar-light" style="background-color: #191c1f; margin-bottom: 10px">
+        <div class="col-2">
+            <a class="nav-link active" href="/"><h2 class="slogan">Blog
+                    Lite</h2>
+            </a>
+        </div>
+        <div class="col-7">
+            <form class="form-inline" name="searchForm" method="get"
+                  action="/registration">
+                <input class="form-control col-9 mr-sm-2" name="search" type="text"/>
+                <input class="btn" type="submit" value="Search"/>
+            </form>
+        </div>
+        <div class="col-3 text-right">
+                            <a href="/login">
+                    <button class="btn btn-info">Login</button>
+                </a>
+                <a href="/registration">
+                    <button class="btn btn-success">Registration</button>
+                </a>
+                    </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+                                                                                                                                                    <form class="registration-form" method="post" action="/registration">
+    <div class="form-group">
+        <label for="registrationInput">Login</label>
+        <input id="registrationInput" class="form-control input-sm chat-input" type="text" name="username">
+    </div>
+    <div class="form-group">
+        <label for="registrationInputEmail">E-mail</label>
+        <input id="registrationInputEmail" class="form-control input-sm chat-input" type="text"
+               name="email">
+    </div>
+    <div class="form-group">
+        <label for="registrationPasswordInput">Password</label>
+        <input id="registrationPasswordInput" class="form-control input-sm chat-input" type="password"
+               name="password">
+    </div>
+    <input class="btn btn-success btn-md btn-block" type="submit" name="registrationButton" value="Registration">
+</form>        </div>
+    </div>
+</div>
+
+<footer class="col-12">
+    <div class="row row navbar navbar-light" style="background-color: #191c1f; color:white; margin-top: 10px">
+        © 2017 Inc.
+    </div>
+</footer>
+
+
+</body>
+</html>
