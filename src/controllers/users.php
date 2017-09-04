@@ -64,14 +64,16 @@ function registration() {
         core\redirect('registration_page');
     }
 
-    if (!($_POST['username'] == $user[0]['username'])) {
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        User::insert(['username' => $_POST['username'], 'password' => $password, 'email' => $_POST['email']]);
-
-        core\addFlash('success', 'You are register!');
-        core\redirect('main_page');
-    } else {
+    if ($_POST['username'] == $user[0]['username']) {
         core\addFlash('danger', 'Username already exists!');
         core\redirect('registration_page');
     }
+
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    User::insert(['username' => $_POST['username'], 'password' => $password, 'email' => $_POST['email']]);
+
+    core\addFlash('success', 'You are register!');
+    core\redirect('main_page');
+
+
 }
