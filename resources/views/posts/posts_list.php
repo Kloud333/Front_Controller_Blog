@@ -1,5 +1,3 @@
-<?= $content ?>
-
 <?php foreach ($articles as $post_item) { ?>
     <div style="border-bottom: 1px solid #007bff; padding: 10px;">
         <a href="<?= \app\core\createUrl('post_by_id', ['id' => $post_item['id']]) ?>">
@@ -15,9 +13,9 @@
         <? } ?>
         <?php if ($app['route']['name'] == 'user_cabinet_page' && $app['user']) { ?>
             <a href="<?= \app\core\createUrl('edit_post', ['num' => $post_item['id']]) ?>">
-                <button class="btn btn-warning" type="submit" value="Edit">Edit</button>
+                <button class="btn btn-warning" type="submit" value="Edit" name="edit">Edit</button>
             </a>
-            <form class="d-inline-block" method="post" action="<?= \app\core\createUrl('delete_post') ?>">
+            <form class="delete-form d-inline-block" method="post" action="<?= \app\core\createUrl('delete_post') ?>">
                 <input type="hidden" name="postId" value="<?= $post_item['id'] ?>">
                 <input class="btn btn-danger" type="submit" name="delete" value="Delete">
             </form>
