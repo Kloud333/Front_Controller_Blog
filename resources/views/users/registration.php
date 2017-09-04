@@ -5,14 +5,14 @@
         </div>
     <?php endforeach; ?>
 <?php endforeach; ?>
-<form method="post" action="<?= \app\core\createUrl('registration') ?>">
+<form class="registration-form" method="post" action="<?= \app\core\createUrl('registration') ?>">
     <div class="form-group">
         <label for="registrationInput">Login</label>
         <input id="registrationInput" class="form-control input-sm chat-input" type="text" name="username">
     </div>
     <div class="form-group">
         <label for="registrationInputEmail">E-mail</label>
-        <input id="registrationInputEmail" class="form-control input-sm chat-input" type="email"
+        <input id="registrationInputEmail" class="form-control input-sm chat-input" type="text"
                name="email">
     </div>
     <div class="form-group">
