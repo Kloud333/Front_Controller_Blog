@@ -6,7 +6,7 @@
     <?php endforeach; ?>
 <?php endforeach; ?>
 
-<form class="form-login" method="post" action="<?= \app\core\createUrl('login') ?>">
+<form class="login-form" method="post" action="<?= \app\core\createUrl('login') ?>">
     <div class="form-group">
         <label for="loginInput">Login</label>
         <input id="loginInput" class="form-control input-sm chat-input" type="text" name="username">
