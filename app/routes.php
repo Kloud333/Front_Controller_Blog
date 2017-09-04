@@ -10,6 +10,7 @@ return [
         'function' => 'app\\src\\controllers\\posts\\index',
         'methods' => ['GET']
     ],
+
     'post_by_id' => [
         'path' => '/post/{id}',
         'file' => 'controllers\posts.php',
@@ -19,7 +20,7 @@ return [
     'post_by_author' => [
         'path' => '/author/{criteria}',
         'file' => 'controllers\posts.php',
-        'function' => 'app\\src\\controllers\\posts\\index',
+        'function' => 'app\\src\\controllers\\posts\\postsByAuthor',
         'methods' => ['GET']
     ],
     'login_page' => [
@@ -35,9 +36,9 @@ return [
         'methods' => ['GET']
     ],
     'user_cabinet_page' => [
-        'path' => '/user/cabinet/{criteria}',
+        'path' => '/user/cabinet/',
         'file' => 'controllers\posts.php',
-        'function' => 'app\\src\\controllers\\posts\\index',
+        'function' => 'app\\src\\controllers\\posts\\userCabinet',
         'methods' => ['GET']
     ],
     'login' => [
