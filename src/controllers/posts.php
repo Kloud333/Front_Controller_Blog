@@ -16,33 +16,50 @@ use app\src\models\Post;
 // * @param null $edit
 // * @return null|string
 // */
-function index($criteria = null) {
+function index() {
 
-    $criteria = [
-        'link' => isset($_GET['search']) ? '?search=' . $_GET['search'] . '&' : '?',
-        'countOfPages' => 4,
-        'page' => is_null($_GET['page']) ? 1 : ceil($_GET['page']),
-        'tag' => $criteria
-    ];
+    return renderView(['default_template.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria')
+    ]);
+}
 
-    if (isset($_GET['search']) && $_GET['search'] == '') {
-        core\addFlash('danger', 'Fill the search field.');
+function userCabinet() {
+
+    global $app;
+
+    if (!isset($app['user']['username'])) {
+        core\redirect('login_page');
     }
+
+    $criteria = $app['user']['username'];
+
+    return renderView(['default_template.php', 'posts/add_post.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$criteria])
+    ]);
+}
+
+function postsByAuthor($criteria) {
 
     return renderView(['default_template.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$criteria])
     ]);
 }
 
-function getPostsByCriteria($criteria = []) {
+function getPostsByCriteria($criteria = null) {
+
+    if (isset($_GET['search']) && $_GET['search'] == '') {
+        core\addFlash('danger', 'Fill the search field!');
+    }
+
+    $link = isset($_GET['search']) ? '?search=' . $_GET['search'] . '&' : '?';
+    $countOfPages = 4;
+    $page = is_null($_GET['page']) ? 1 : ceil($_GET['page']);
 
     $search = $_GET['search'];
-    $posts = ($criteria['page'] - 1) * $criteria['countOfPages'];
+    $posts = ($page - 1) * $countOfPages;
 
     $mainQuery = Post::select('posts.*', 'users.username')
         ->leftJoin('users', 'posts.user_id', '=', 'users.id')
         ->where(function ($query) use ($criteria) {
-            if ($criteria['tag']) {
-                $query->where('username', '=', $criteria['tag']);
+            if ($criteria) {
+                $query->where('username', '=', $criteria);
             }
         })
         ->where(function ($query) use ($search) {
@@ -54,15 +71,14 @@ function getPostsByCriteria($criteria = []) {
 
     $post = $mainQuery
         ->orderBy('created_at', 'desc')
-        ->limit($criteria['countOfPages'])
+        ->limit($countOfPages)
         ->offset($posts)
         ->get()
         ->toArray();
 
+    $pages = ceil($count / $countOfPages);
 
-    $pages = ceil($count / $criteria['countOfPages']);
-
-    return renderView(['posts/posts_list.php', 'posts/add_post.php'], ['articles' => $post, 'pages' => $pages, 'page' => $criteria['page'], 'link' => $criteria['link'], 'tag' => $criteria['tag']]);
+    return renderView(['posts/posts_list.php'], ['articles' => $post, 'pages' => $pages, 'page' => $page, 'link' => $link, 'tag' => $criteria]);
 }
 
 function postById($id) {
@@ -76,11 +92,12 @@ function addPost() {
     if ((!$_POST['addPostTitle']) || (!$_POST['addPostText']) || (!$app['user']['id'])) {
         core\addFlash('danger', 'Fill all fields!');
         core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
-    } else {
-        Post::insert(['title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText'], 'user_id' => $app['user']['id']]);
-        core\addFlash('info', 'Post added!');
-        core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
     }
+
+    Post::insert(['title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText'], 'user_id' => $app['user']['id']]);
+    core\addFlash('info', 'Post added!');
+    core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
+
 }
 
 function deletePost() {
@@ -98,6 +115,12 @@ function editPost($num) {
 
 function saveEdit() {
     global $app;
+
+    if ((!$_POST['addPostTitle']) || (!$_POST['addPostText'])) {
+        core\addFlash('danger', 'Fields cannot be empty!');
+        core\redirect('edit_post', ['num' => $_POST['postId']]);
+    }
+
     Post::where('id', '=', $_POST['postId'])->update(array('title' => $_POST['addPostTitle'], 'content' => $_POST['addPostText']));
 
     core\addFlash('success', 'Post changed!');
