@@ -55,12 +55,12 @@ function registration() {
     $user = User::where('username', '=', $_POST['username'])->get()->toArray();
 
     if (!($_POST['username']) || !($_POST['email']) || (!$_POST['password'])) {
-        core\addFlash('danger', 'Not enough parameters');
+        core\addFlash('danger', 'Not enough parameters!');
         core\redirect('registration_page');
     }
 
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        core\addFlash('danger', 'Incorrect email');
+        core\addFlash('danger', 'Incorrect Email!');
         core\redirect('registration_page');
     }
 
