@@ -66,10 +66,10 @@ return [
         'methods' => ['POST']
     ],
     'delete_post' => [
-        'path' => '/delete',
+        'path' => '/delete/{num}',
         'file' => 'controllers\posts.php',
         'function' => 'app\\src\\controllers\\posts\\deletePost',
-        'methods' => ['POST']
+        'methods' => ['GET']
     ],
     'edit_post' => [
         'path' => '/edit/post/{num}',
