@@ -30,4 +30,9 @@ class Post extends \Illuminate\Database\Eloquent\Model {
     protected $table = 'posts';
     public $timestamps = false;
 
+    public function user()
+    {
+        return $this->belongsTo('app\src\models\User','user_id','id');
+    }
+
 }
