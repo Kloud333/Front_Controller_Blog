@@ -7,6 +7,8 @@ use function app\core\renderView;
 use function app\core\renderFile;
 use app\core;
 use app\src\models\Post;
+use app\src\models\User;
+use function MongoDB\BSON\toJSON;
 
 ///**
 // * @return null|string
@@ -30,9 +32,7 @@ function userCabinet() {
         core\redirect('login_page');
     }
 
-    $criteria = $app['user']['username'];
-
-    return renderView(['default_template.php', 'posts/add_post.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$criteria])
+    return renderView(['default_template.php', 'posts/add_post.php'], ['content' => renderFile('controllers\posts.php', 'app\\src\\controllers\\posts\\getPostsByCriteria', [$app['user']['username']])
     ]);
 }
 
@@ -51,20 +51,14 @@ function getPostsByCriteria($criteria = null) {
     $link = isset($_GET['search']) ? '?search=' . $_GET['search'] . '&' : '?';
     $countOfPages = 4;
     $page = is_null($_GET['page']) ? 1 : ceil($_GET['page']);
-
-    $search = $_GET['search'];
     $posts = ($page - 1) * $countOfPages;
 
-    $mainQuery = Post::select('posts.*', 'users.username')
-        ->leftJoin('users', 'posts.user_id', '=', 'users.id')
-        ->where(function ($query) use ($criteria) {
+    $mainQuery = Post::with('user')
+        ->whereHas('user', function ($query) use ($criteria) {
             if ($criteria) {
                 $query->where('username', '=', $criteria);
             }
-        })
-        ->where(function ($query) use ($search) {
-            $query->where('title', 'LIKE', '%' . $search . '%');
-        });
+        })->where('title', 'LIKE', '%' . $_GET['search'] . '%');
 
     $count = $mainQuery
         ->count();
@@ -82,7 +76,7 @@ function getPostsByCriteria($criteria = null) {
 }
 
 function postById($id) {
-    $result = Post::select('posts.*', 'users.username')->leftJoin('users', 'posts.user_id', '=', 'users.id')->where('posts.id', '=', $id)->get()->toArray();
+    $result = Post::with('user')->where('posts.id', '=', $id)->get()->toArray();
     return renderView(['default_template.php', 'posts/post_by_id.php'], ['articles' => $result]);
 }
 
@@ -100,9 +94,9 @@ function addPost() {
 
 }
 
-function deletePost() {
+function deletePost($num) {
     global $app;
-    Post::where('id', '=', $_POST['postId'])->delete();
+    Post::where('id', '=', $num)->delete();
 
     core\addFlash('warning', 'Post deleted!');
     core\redirect('user_cabinet_page', ['criteria' => $app['user']['username']]);
