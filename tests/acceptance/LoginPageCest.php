@@ -10,6 +10,12 @@ class LoginPageCest {
     }
 
     // tests
+    public function successfulLogin(AcceptanceTester $I) {
+        $I->wantTo('Successful login');
+        $I->submitForm('.login-form', ['username' => 'admin', 'password' => 'admin']);
+        $I->see('You are successfully login!');
+    }
+
     public function unsuccessfulLoginWrongData(AcceptanceTester $I) {
         $I->wantTo('Unsuccessful login with wrong data');
         $I->submitForm('.login-form', ['username' => 'something', 'password' => 'something']);
@@ -22,9 +28,15 @@ class LoginPageCest {
         $I->see('Not enough parameters');
     }
 
-    public function successfulLogin(AcceptanceTester $I) {
-        $I->wantTo('Successful login');
-        $I->submitForm('.login-form', ['username' => 'admin', 'password' => 'admin']);
-        $I->see('You are successfully login!');
+    public function unsuccessfulLoginEmptyUsername(AcceptanceTester $I) {
+        $I->wantTo('Unsuccessful login - Empty username');
+        $I->submitForm('.login-form', ['username' => '', 'password' => 'pass']);
+        $I->see('Not enough parameters');
+    }
+
+    public function unsuccessfulLoginEmptyPassword(AcceptanceTester $I) {
+        $I->wantTo('Unsuccessful login - Empty password');
+        $I->submitForm('.login-form', ['username' => 'user', 'password' => '']);
+        $I->see('Not enough parameters');
     }
 }
