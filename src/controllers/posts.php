@@ -103,6 +103,12 @@ function deletePost($num) {
 }
 
 function editPost($num) {
+    global $app;
+
+    if (!isset($app['user']['username'])) {
+        core\redirect('login_page');
+    }
+
     $post = Post::where('id', '=', $num)->get()->toArray();
     return renderView(['default_template.php', 'posts/edit_post.php'], ['editPosts' => $post]);
 }
